@@ -21,8 +21,10 @@ def get_levenstein_distance(a: str, b: str):
 
 def get_levenstein_distance_normalized(a: str, b: str):
     ''' Get distance to transform text `a` to `b` devided by the length of text `a` '''
+    if (len(a) == 0):
+        a, b = b, a
+
+    if (len(a) == 0):
+        return 1.0
+
     return get_levenstein_distance(a, b) / len(a)
-
-
-if __name__ == "__main__":
-    print("ans: ", get_levenstein_distance("abcc", "abcc"))

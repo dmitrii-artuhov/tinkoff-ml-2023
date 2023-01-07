@@ -1,5 +1,7 @@
 import argparse
-from utils import *
+import utils
+from python_ast import PythonAST
+from levenstein import get_levenstein_distance_normalized
 
 def main(input_file, output_file):
     output = open(output_file, 'w')
@@ -8,8 +10,8 @@ def main(input_file, output_file):
         for line in input:
             [filename1, filename2] = line.strip().split(' ', 1)
 
-            is_valid_filename1 = file_exists(filename1)
-            is_valid_filename2 = file_exists(filename2)
+            is_valid_filename1 = utils.file_exists(filename1)
+            is_valid_filename2 = utils.file_exists(filename2)
 
             if (not (is_valid_filename1 and is_valid_filename2)):
                 message = "Invalid path(s): "
@@ -20,8 +22,27 @@ def main(input_file, output_file):
                 message += "\n"
                 output.write(message)
                 continue
-                
-            output.write(f"Both files exist: '{filename1}', '{filename2}'\n")
+            
+            ast1 = PythonAST(filename1)
+            ast2 = PythonAST(filename2)
+            
+            # add ast preprocessing here
+
+            # calculate the metric with processed programms
+            result = get_levenstein_distance_normalized(
+                ast1.get_programm_text(),
+                ast2.get_programm_text(),
+            )
+
+            output.write(f"{1.0 - result}\n")
+
+            # output.write("AST1:\n")
+            # output.write(ast1.get_programm_text())
+            # output.write("\n")
+            
+            # output.write("AST2:\n")
+            # output.write(ast2.get_programm_text())
+            # output.write("\n")
     
     output.close()
 
@@ -31,5 +52,5 @@ if __name__ == "__main__":
     parser.add_argument('output_file', default="scores.txt", help="Specify output filename")
     args = parser.parse_args()
 
-    check_file_exists(args.input_file)
+    utils.check_file_exists(args.input_file)
     main(args.input_file, args.output_file)
