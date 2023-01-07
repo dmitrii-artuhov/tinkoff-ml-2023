@@ -9,3 +9,16 @@ def file_exists(filename):
         return False
     
     return True
+
+
+def print_matrix(mat):
+    n = len(mat)
+    m = len(mat[0])
+
+    print("dp:")
+    for i in range(0, n):
+        s = ""
+        for j in range(0, m):
+            s += f"{mat[i][j]} "
+        print(s)
+
