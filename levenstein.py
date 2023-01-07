@@ -20,11 +20,8 @@ def get_levenstein_distance(a: str, b: str):
     return dp[n % 2][m]
 
 def get_levenstein_distance_normalized(a: str, b: str):
-    ''' Get distance to transform text `a` to `b` devided by the length of text `a` '''
-    if (len(a) == 0):
-        a, b = b, a
-
-    if (len(a) == 0):
+    ''' Get distance to transform text `a` to `b` divided by the length of text `a` '''
+    if (len(a) == 0 and len(b) == 0):
         return 1.0
 
-    return get_levenstein_distance(a, b) / len(a)
+    return get_levenstein_distance(a, b) / max(len(a), len(b))
