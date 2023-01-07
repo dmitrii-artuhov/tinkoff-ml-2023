@@ -7,11 +7,21 @@ def main(input_file, output_file):
     with open(input_file) as input:
         for line in input:
             [filename1, filename2] = line.strip().split(' ', 1)
-            if (not (file_exists(filename1) and file_exists(filename2))):
-                output.write("Invalid file paths: " + "'" + filename1 + "'" + "'" + filename2 + "'\n")
+
+            is_valid_filename1 = file_exists(filename1)
+            is_valid_filename2 = file_exists(filename2)
+
+            if (not (is_valid_filename1 and is_valid_filename2)):
+                message = "Invalid path(s): "
+                if (not is_valid_filename1):
+                    message += f"'{filename1}'"
+                if (not is_valid_filename2):
+                    message += f", '{filename2}'"
+                message += "\n"
+                output.write(message)
                 continue
-            
-            output.write("Both files exist: " + "'" + filename1 + "'" + "'" + filename2 + "'\n")
+                
+            output.write(f"Both files exist: '{filename1}', '{filename2}'\n")
     
     output.close()
 
