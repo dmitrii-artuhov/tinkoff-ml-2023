@@ -35,14 +35,6 @@ def main(input_file, output_file):
             )
 
             output.write(f"{1.0 - result}\n")
-
-            # output.write("AST1:\n")
-            # output.write(ast1.get_programm_text())
-            # output.write("\n")
-            
-            # output.write("AST2:\n")
-            # output.write(ast2.get_programm_text())
-            # output.write("\n")
     
     output.close()
 
