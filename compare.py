@@ -26,7 +26,9 @@ def main(input_file, output_file):
             ast1 = PythonAST(filename1)
             ast2 = PythonAST(filename2)
             
-            # add ast preprocessing here
+            # ast preprocessing
+            # ...
+
 
             # calculate the metric with processed programms
             result = get_levenstein_distance_normalized(
