@@ -1,1 +1,4 @@
 /plagiat
+.venv
+*.txt
+__pycache__
