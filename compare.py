@@ -22,23 +22,27 @@ def main(input_file, output_file):
                 message += "\n"
                 output.write(message)
                 continue
-            
-            ast1 = PythonAST(filename1)
-            ast2 = PythonAST(filename2)
-            
-            # ast preprocessing
-            ast1.unify_ast()
-            ast2.unify_ast()
+            try:
+                ast1 = PythonAST(filename1)
+                ast2 = PythonAST(filename2)
+                
+                # ast preprocessing
+                ast1.unify_ast()
+                ast2.unify_ast()
 
 
-            # calculate the metric with processed programms
-            result = get_levenstein_distance_normalized(
-                ast1.get_programm_text(),
-                ast2.get_programm_text(),
-            )
+                # calculate the metric with processed programms
+                result = get_levenstein_distance_normalized(
+                    ast1.get_programm_text(),
+                    ast2.get_programm_text(),
+                )
 
-            output.write(f"{1.0 - result}\n")
-    
+                output.write(f"{1.0 - result}\n")
+            except UnicodeDecodeError as err:
+                output.write(f"Some files are corrupted: UnicodeDecodeError: {err.reason!r} (while processing files: {filename1!r}, {filename2!r})\n")
+            except Exception as err:
+                output.write(f"Unknown error: {err!r} (while processing files: {filename1!r}, {filename2!r})\n")
+
     output.close()
 
 if __name__ == "__main__":
