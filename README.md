@@ -27,7 +27,7 @@ Utility for comparing python codefiles in order to check for plagiate.
     ```
 
 ## How it works
-Programm uses [Levenstein distance](https://en.wikipedia.org/wiki/Levenshtein_distance#:~:text=Informally%2C%20the%20Levenshtein%20distance%20between,considered%20this%20distance%20in%201965.) algorithm on the pre-processed python-programm texts. To be exact, the formula look like this: `compare(a, b) = levenstein_distance(a, b) / max(len(a), len(b))`, where `a` and `b` the programm texts and `compare(a, b)` is the function that calculates the final answer. 
+Utility uses [Levenstein distance](https://en.wikipedia.org/wiki/Levenshtein_distance#:~:text=Informally%2C%20the%20Levenshtein%20distance%20between,considered%20this%20distance%20in%201965.) algorithm on the pre-processed python-programm texts. To be exact, the formula look like this: `compare(a, b) = levenstein_distance(a, b) / max(len(a), len(b))`, where `a` and `b` the programm texts and `compare(a, b)` is the function that calculates the final answer. 
 
 Text pre-processing does the following:
 
