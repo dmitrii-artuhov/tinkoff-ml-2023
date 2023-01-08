@@ -27,7 +27,8 @@ def main(input_file, output_file):
             ast2 = PythonAST(filename2)
             
             # ast preprocessing
-            # ...
+            ast1.unify_ast()
+            ast2.unify_ast()
 
 
             # calculate the metric with processed programms

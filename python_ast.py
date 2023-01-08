@@ -1,4 +1,5 @@
 import ast
+from ast_transformer import UnificationTranformer, NameCollectingVisitor
 
 class PythonAST:
     def __init__(self, filename):
@@ -7,6 +8,7 @@ class PythonAST:
 
     def load(self, filename):
         ''' Loads AST from python file '''
+        print(f"Opening file {filename!r}")
         py_file = open(filename).read()
         self.ast = ast.parse(py_file)
 
@@ -16,6 +18,11 @@ class PythonAST:
     
     def get_ast(self):
         return self.ast
+    
+    def unify_ast(self):
+        names: NameCollectingVisitor = NameCollectingVisitor(self.ast)
+        self.ast: ast = UnificationTranformer(names.variable_names, names.arg_names, names.function_names).visit(self.ast)
+
     
     def get_programm_text(self):
         return ast.unparse(self.ast)
