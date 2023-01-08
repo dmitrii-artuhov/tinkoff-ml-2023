@@ -63,11 +63,16 @@ class UnificationTranformer(ast.NodeTransformer):
 
     def _tranform_node(self, node, names_container, attr_name):
         name = getattr(node, attr_name)
-        if (name in names_container):
+        new_name = name
+
+        if (name in self.context[-1]):
+            new_name = self.context[-1][name]
+        elif (name in names_container):
             new_name = names_container[name]
-            return type(node)(**{**node.__dict__, f"{attr_name}": new_name})
-        
-        return node
+        else:
+            return node # don't want to make extra copy for no reason
+
+        return type(node)(**{**node.__dict__, f"{attr_name}": new_name})
 
     # def _update_names_container(self, node, names_container, names_label, attr_name):
     #     if (not (getattr(node, attr_name) in names_container)):
@@ -95,13 +100,20 @@ class UnificationTranformer(ast.NodeTransformer):
     def visit_FunctionDef(self, node):
         self._erase_docstring(node)
         # self._update_names_container(node, self.function_names, names_label="func", attr_name="name")
+        
+        self.context.append(self.arg_names)
         self.generic_visit(node)
+        self.context.pop()
 
         return self._tranform_node(node, self.function_names, attr_name="name")
 
     def visit_AsyncFunctionDef(self, node):
         self._erase_docstring(node)
+        
+        self.context.append(self.arg_names)
         self.generic_visit(node)
+        self.context.pop()
+        
         return self._tranform_node(node, self.function_names, attr_name="name")
 
 
