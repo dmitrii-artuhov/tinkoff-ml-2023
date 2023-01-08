@@ -13,8 +13,13 @@ class NameCollectingVisitor(ast.NodeVisitor):
         self.visit(node)
     
     def _update_names_container(self, node, names_container, names_label, attr_name):
-        if (not (getattr(node, attr_name) in names_container)):
-            names_container[getattr(node, attr_name)] = f"{names_label}_{len(names_container)}"
+        attribute_value = getattr(node, attr_name)
+        
+        if (attr_name == "arg" and attribute_value == "self"):
+            return
+        
+        if (not (attribute_value in names_container)):
+            names_container[attribute_value] = f"{names_label}_{len(names_container)}"
     
     # vars
     def visit_Assign(self, node):
