@@ -8,7 +8,6 @@ class PythonAST:
 
     def load(self, filename):
         ''' Loads AST from python file '''
-        print(f"Opening file {filename!r}")
         py_file = open(filename).read()
         self.ast = ast.parse(py_file)
 
