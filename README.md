@@ -34,4 +34,4 @@ Text pre-processing does the following:
 1. Removes all `docstrings` in the programm.
 2. Renames all variables to the pattern: `var_{i}` (where `i` is the number of the variables that were renamed before variable `var_{i}`) and substitutes them with their pattern-name.
 3. Renames all functions, including class methods to the pattern: `func_{i}`, following same rule as described above.
-4. Renames all function and method arguments (except `self` keyword) and substitutes them with their pattern-name inside the function/method body.
+4. Renames all function and method arguments (except `self` keyword) with the pattern `arg_{i}` and substitutes them with their pattern-name inside the function/method body.
